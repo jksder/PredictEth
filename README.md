@@ -1,8 +1,8 @@
 # Setup Instructions
 
-1. run <npm install>
+1. run npm install
 
-2. run <npm start>
+2. run npm start
 
 # App Goals
 
