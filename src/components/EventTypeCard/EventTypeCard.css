@@ -11,6 +11,8 @@
 
 .event-type-card:hover {
   background-color: rgb(216, 216, 216);
+  text-decoration: none;
+  color: black;
 }
 
 .event-type-card > h3 {

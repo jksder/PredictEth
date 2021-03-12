@@ -21,21 +21,23 @@
 }
 
 .rn-event-right {
-  width: 40%;
+  width: 30%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.rn-event-right > label {
-  font-size: 1.2rem;
+.rn-balance {
+  font-size: 1.1rem;
   font-weight: 500;
   padding: 0.4em 1em;
   border-radius: 0.3em;
   border: none;
-  background-color: navy;
+  background-color: green;
   color: white;
   outline: none;
+  margin:0;
+  width: 7em;
 }
 
 .rn-event-right > button {

@@ -3,6 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top:30%;
 }
 
 .hp-mid {
@@ -18,6 +19,6 @@
 
 .hp-event-cont {
   display: flex;
-  width: 90%;
+  width: 100%;
   justify-content: space-between;
 }

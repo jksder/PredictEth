@@ -83,9 +83,12 @@ export default function RandomNumber() {
     }
   };
 
-  const enterEvent = async (evhash) => {
+  const enterEvent = async (evhash, unique) => {
     setStatus("pending");
     try {
+      const errMsg = "already in the game";
+      if (!unique) throw errMsg;
+
       var txn = await contract.methods.enterEvent(evhash).send({
         from: accounts[0],
         value: web3.utils.toWei("0.02"),
@@ -99,10 +102,13 @@ export default function RandomNumber() {
     }
   };
 
-  const endEvent = async (evhash) => {
+  const endEvent = async (evhash, match) => {
     setStatus("pending");
 
     try {
+      const errMsg = "not the manager";
+      if (!match) throw errMsg;
+
       var random = Math.floor(Math.random() * 2);
       var txn = await contract.methods.endEvent(evhash, random).send({
         from: accounts[0],
@@ -130,6 +136,7 @@ export default function RandomNumber() {
           endEvent={endEvent}
           open={item.open}
           winner={item.players[item.winner]}
+          user={accounts[0]}
         />
       );
     });
