@@ -1,0 +1,54 @@
+.rn-event {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  border: 1px solid rgb(216, 216, 216);
+  padding: 1em;
+  border-radius: 0.5em;
+  box-sizing: border-box;
+  margin-top: 2em;
+}
+
+.rn-event-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.rn-event-left > h3,
+.rn-event-left > h5 {
+  margin: 0em 0 0.6em !important;
+}
+
+.rn-event-right {
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rn-event-right > label {
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 0.4em 1em;
+  border-radius: 0.3em;
+  border: none;
+  background-color: navy;
+  color: white;
+  outline: none;
+}
+
+.rn-event-right > button {
+  font-size: 1.2rem;
+  padding: 0.5em 1em;
+  border-radius: 0.3em;
+  border: none;
+  background-color: navy;
+  color: white;
+  outline: none;
+  cursor: pointer;
+}
+
+.rng-inactive {
+  background-color: rgb(179, 179, 219) !important;
+}

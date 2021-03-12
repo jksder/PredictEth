@@ -1,0 +1,17 @@
+[
+  {
+    "eventTitle": "Random Numbers",
+    "eventDescription": "Simple betting match between players based on random number generation to pick the winner.Administrator of events will be the event creator.",
+    "eventLocation": "/random-number"
+  },
+  {
+    "eventTitle": "Current Events",
+    "eventDescription": "Bet on notable events ocurring around the planet. Administrator will be the development team for testing purposes.",
+    "eventLocation": "/random-number"
+  },
+  {
+    "eventTitle": "Make your own Event",
+    "eventDescription": "Create your own events and invite people to come join the betting bool. Administrator will be the creator of this event. ",
+    "eventLocation": "/random-number"
+  }
+]
