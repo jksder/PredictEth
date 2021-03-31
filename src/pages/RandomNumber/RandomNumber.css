@@ -4,8 +4,8 @@
 .rn-add {
   display: flex;
   justify-content: space-between;
-  margin-top: 3em;
-  margin-bottom: 3em;
+  margin-top: 1em;
+  margin-bottom: 1em;
   width: 100%;
 }
 
@@ -25,6 +25,7 @@
   border: 1px solid rgb(216, 216, 216);
   outline: none;
   padding-left: 1em;
+  width: 70%;
 }
 
 .bet-form > button {
@@ -36,4 +37,10 @@
   color: white;
   outline: none;
   cursor: pointer;
+}
+
+.rn-events-list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }

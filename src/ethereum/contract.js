@@ -1,4 +1,4 @@
-export const address = "0x3E594ceA0e5653c0c2dEd6B6b9D0a761A4373005";
+export const address = "0xA75cF19B8ec1e3Cf72202019B3A3ed0b23dC53F1";
 
 export const ABI = [
   {
@@ -33,13 +33,7 @@ export const ABI = [
       },
     ],
     name: "endEvent",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
+    outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
@@ -52,13 +46,7 @@ export const ABI = [
       },
     ],
     name: "enterEvent",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
+    outputs: [],
     stateMutability: "payable",
     type: "function",
   },

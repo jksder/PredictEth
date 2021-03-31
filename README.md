@@ -16,9 +16,25 @@ As the betting will be done using Ethereum tokens, there is no real need to keep
 
 The frontend will be built using a ReactJS framework. This will allow the seamless integration of the Web3 library through its NodeJS module into the frontend itself. However, the provider for the web3 instance used (which is a communication layer between the network and the JavaScript code) will be given by the Metamask extension. This is so that the application can piggyback off Metamask’ s inbuilt features, such as account selection, transaction handling, account imports, hardware wallet use etc., while also giving the user much more visibility and access to their Eth tokens.
 
+* Web3 Setup
+
+New Metamask updates means that the provider is no longer injected into the browser with the browser from Metamask and requires an asynchronous metamask function to get to it. Therefore web3 and contract instances are created on each page on startup. 
+
+* Hashing function
+
+The hash of the event title is done at the front end because contract functionality should be limited as much as possible in order to limit gas costs.
+
+* Event Type Contracts
+
+Each event type will be given its own contract. They are all identical for now because true randomization is not possible in the ethereum smart contract. As such the control of who is the winner is done on the frontend. This is a bad security practice however and should be resolved by some means at a future date. 
+
 - The Back End
 
 Since this is a distributed application with a public test chain as the backend, the currency handling requires no middleman or intermediate server. Instead, there is direct communication between the blockchain and the frontend. This would be a security concern if done entirely through the application, but security will be handled by the Metamask extension here which safely handles user accounts and ensures a secure connection to Ethereum testnet through an Infura node connected to the network. The blockchain portion of the backend will only handle the currency exchanges and not be used for data storage at all. This is since data storage on test networks is very costly in terms of gas used for transactions. As such, extraneous data such as usernames, event details, event management indexes etc. will be stored in a more traditional database such as MongoDB or MySQL.
+
+- Checks involved
+
+Checks in functionality should be doubled up: done in both the backend and the frontend. 
 
 # Current Work in Progress
 

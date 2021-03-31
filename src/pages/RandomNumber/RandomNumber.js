@@ -14,6 +14,9 @@ import { address, ABI } from "../../ethereum/contract";
 import Web3 from "web3";
 import detectEthereumProvider from "@metamask/detect-provider";
 
+//randomization function
+import sha256 from "sha256";
+
 export default function RandomNumber() {
   //ethereum info
   const [web3, setWeb3] = useState(null);
@@ -47,7 +50,16 @@ export default function RandomNumber() {
         var local_events = [];
         for (var hash of eventhashes) {
           var event = await contract.methods.viewEvent(hash).call();
-          local_events.push(event);
+
+          //event is returned as array with k/v pairs. Transform into object
+          var objectified_event = {
+            hash,
+          };
+          for (var key in event) {
+            objectified_event[key] = event[key];
+          }
+
+          local_events.push(objectified_event);
         }
         setEvents(local_events);
       }
@@ -67,9 +79,12 @@ export default function RandomNumber() {
   //event handlers
   const addEvent = async () => {
     setStatus("pending");
-    //for now the hash is the same as the title
+
+    //create event hash
+    const evHash = sha256(title);
+
     try {
-      var txn = await contract.methods.addEvent(title, title).send({
+      var txn = await contract.methods.addEvent(evHash, title).send({
         from: accounts[0],
         value: web3.utils.toWei("0.02"),
       });
@@ -89,6 +104,7 @@ export default function RandomNumber() {
       const errMsg = "already in the game";
       if (!unique) throw errMsg;
 
+      console.log(accounts);
       var txn = await contract.methods.enterEvent(evhash).send({
         from: accounts[0],
         value: web3.utils.toWei("0.02"),
@@ -113,8 +129,8 @@ export default function RandomNumber() {
       var txn = await contract.methods.endEvent(evhash, random).send({
         from: accounts[0],
       });
-      setStatus("success");
       console.log(txn);
+      setStatus("success");
       startup();
     } catch (err) {
       setStatus("failure");
@@ -129,14 +145,16 @@ export default function RandomNumber() {
       return (
         <EventCard
           key={index}
-          hash={item.title}
+          title={item.title}
+          hash={item.hash}
           players={item.players}
           pool={web3.utils.fromWei(item.pool, "ether")}
           enterEvent={enterEvent}
           endEvent={endEvent}
           open={item.open}
-          winner={item.players[item.winner]}
+          winner={item.players[item.winner]} //the winner is recorded by the index
           user={accounts[0]}
+          web3={web3}
         />
       );
     });
@@ -153,7 +171,7 @@ export default function RandomNumber() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
-          <button onClick={addEvent}>Add Bet</button>
+          <button onClick={addEvent}>Add Event</button>
         </div>
       </div>
       <div className="rn-events">
@@ -176,7 +194,7 @@ export default function RandomNumber() {
             ? "Transaction failed!"
             : null}
         </Alert>
-        {rendered_events}
+        <div className="rn-events-list">{rendered_events}</div>
       </div>
     </div>
   );

@@ -4,6 +4,8 @@ pragma experimental ABIEncoderV2;
 
 contract RandomNumber{
     
+    //ATTRIBUTES
+    
     //struct that defines event
     struct Event{
         string title;
@@ -13,18 +15,21 @@ contract RandomNumber{
         uint256 winner;
     }
     
-    //mapping that contains list of structs
+    //mapping that contains list of structs mapped to hash
     mapping(string=>Event) private events;
     
     //array that stores a list of event hashes
-    string[] eventhashes;
+    string[] private eventhashes;
+    
+    
+    //FUNCTIONS
     
     //function to create event
     function addEvent (string memory eventHash, string memory title) payable public{
-        
+        //the 
         Event memory e;
         e.title=title;
-        e.pool+=msg.value; //contract gets all the eth in pool so it always has enough to pay out
+        e.pool+=msg.value; 
         events[eventHash] = e; //no need to initialize storage arrays!
         events[eventHash].players.push(msg.sender);
         events[eventHash].open=true;
@@ -43,32 +48,35 @@ contract RandomNumber{
     }
     
     //function to add player to event
-    function enterEvent(string memory eventHash) payable public returns (string memory){ //smart contract gets funds
+    function enterEvent(string memory eventHash) payable public { 
         
-        if(events[eventHash].open){
-        events[eventHash].players.push(msg.sender);
-        events[eventHash].pool+=msg.value;
-        return 'NO_OPEN';
+        //check if player is new to event
+        bool isNew = true;
+        for(uint i=0;i<events[eventHash].players.length;i++){
+            if(events[eventHash].players[i]==msg.sender){
+                isNew = false;
+            }
         }
         
-        return 'SUCESS';
+        //event must be open to add player and player must be new to event
+        require(events[eventHash].open && isNew);
+        
+        events[eventHash].players.push(msg.sender);
+        events[eventHash].pool+=msg.value;
+        
     }
     
     
     //function to pick winner of the lottery
-    function endEvent(string memory eventHash, uint256 randomNumber) public returns (string memory){
-        if(msg.sender!=events[eventHash].players[0]){
-            return 'NO_MANAGER';
-        }
+    function endEvent(string memory eventHash, uint256 randomNumber) public{
         
-        if(events[eventHash].open){
+        //event must be open and caller must be event creator
+        require(events[eventHash].open && msg.sender==events[eventHash].players[0]);
+        
         events[eventHash].players[randomNumber].transfer(events[eventHash].pool);
         events[eventHash].winner=randomNumber;
         events[eventHash].pool=0;
-         events[eventHash].open=false;
-         return 'NO_OPEN';
-         }
-        return 'SUCCESS';
+        events[eventHash].open=false;
     }
     
 }

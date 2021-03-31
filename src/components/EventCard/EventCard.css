@@ -1,13 +1,20 @@
-.rn-event {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  width: 100%;
+.rn-event-container {
+  width: 50em;
   border: 1px solid rgb(216, 216, 216);
   padding: 1em;
   border-radius: 0.5em;
   box-sizing: border-box;
   margin-top: 2em;
+}
+
+.rn-event {
+  display: flex;
+  flex-direction: column;
+}
+
+.rn-event-right{
+  display: flex;
+  justify-content: flex-end;
 }
 
 .rn-event-left {
@@ -20,13 +27,6 @@
   margin: 0em 0 0.6em !important;
 }
 
-.rn-event-right {
-  width: 30%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .rn-balance {
   font-size: 1.1rem;
   font-weight: 500;
@@ -36,7 +36,7 @@
   background-color: green;
   color: white;
   outline: none;
-  margin:0;
+  margin: 1em 0;
   width: 7em;
 }
 
@@ -53,4 +53,11 @@
 
 .rng-inactive {
   background-color: rgb(179, 179, 219) !important;
+}
+
+.playercard {
+  border: 1px solid rgb(216, 216, 216);
+  padding: 1em;
+  border-radius: 0.5em;
+  margin-bottom: 1em;
 }
