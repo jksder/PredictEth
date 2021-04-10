@@ -203,6 +203,7 @@ export default function RandomNumber() {
             <button onClick={addEvent}>Add Event</button>
           </div>
         </div>
+        <h4>Administrator is the creator of the event</h4>
 
         <div className="ue-events">
           <Alert

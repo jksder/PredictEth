@@ -172,7 +172,6 @@ export default function RandomNumber() {
         />
       );
     });
-
   }
 
   if (!selectMode) {
@@ -201,6 +200,8 @@ export default function RandomNumber() {
             <button onClick={addEvent}>Add Event</button>
           </div>
         </div>
+        <h4>Administrator is the development team</h4>
+
         <div className="news-events">
           <Alert
             variant={

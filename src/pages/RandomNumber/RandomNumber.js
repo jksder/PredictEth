@@ -190,6 +190,7 @@ export default function RandomNumber() {
           <button onClick={addEvent}>Add Event</button>
         </div>
       </div>
+      <h4>Administrator is the creator of the event but the winner is random</h4>
       <div className="rn-events">
         <Alert
           variant={
