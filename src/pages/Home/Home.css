@@ -1,5 +1,20 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-2em);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .home-page {
-  margin-top: 20%;
+  width: 100%;
+
+  padding: 3em 0em 3em;
+  box-sizing: border-box;
+  animation: fadeIn 3s forwards;
 }
 
 .hp-mid {
@@ -7,14 +22,83 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .hp-mid > h1 {
   text-align: center;
 }
 
+.hp-mid > figure {
+  width: 40%;
+}
+
 .hp-event-cont {
   display: flex;
-  width: 80%;
+  width: 70%;
   justify-content: space-between;
+}
+
+img {
+  width: 100%;
+  background: transparent;
+}
+
+.bet-form {
+  width: 35%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.bet-form > input {
+  border-radius: 0.3em;
+  font-size: 15px;
+  border: 1px solid rgb(216, 216, 216);
+  outline: none;
+  padding-left: 1em;
+  width: 70%;
+}
+
+.bet-form > button {
+  font-size: 1.2rem;
+  padding: 0.3em 1em;
+  border-radius: 0.3em;
+  border: none;
+  background-color: navy;
+  color: white;
+  outline: none;
+  cursor: pointer;
+}
+
+.ue-events-list,
+.news-events-list,
+.rn-events-list {
+  animation: fadeIn 3s forwards;
+}
+
+@media screen and (max-width: 950px) {
+  .hp-event-cont {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hp-mid > figure {
+    width: 100%;
+  }
+
+  .bet-form {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bet-form > input {
+    border-radius: 0.3em;
+    font-size: 15px;
+    border: 1px solid rgb(216, 216, 216);
+    outline: none;
+    padding: 1em;
+    width: 100%;
+    margin-bottom: 1em;
+  }
 }

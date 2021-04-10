@@ -1,5 +1,5 @@
 .event-type-card {
-  width: 20em;
+  width: 23em;
   border: 1px solid rgb(216, 216, 216);
   padding: 1em;
   border-radius: 0.5em;
@@ -7,14 +7,22 @@
   text-decoration: none;
   color: black;
   margin-top: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .event-type-card:hover {
-  background-color: rgb(216, 216, 216);
   text-decoration: none;
   color: black;
 }
 
 .event-type-card > h3 {
   text-align: center;
+}
+
+@media screen and (max-width: 730px) {
+  .event-type-card {
+    width: 100%;
+  }
 }

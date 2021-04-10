@@ -7,11 +7,17 @@ export default function EventTypeCard({
   eventTitle,
   eventDescription,
   eventLocation,
+  src,
 }) {
   return (
     <a href={eventLocation} className="event-type-card">
-      <h3>{eventTitle}</h3>
-      <p>{eventDescription}</p>
+      <figure>
+        <img alt="event_type" src={src} />
+      </figure>
+      <div>
+        <h3>{eventTitle}</h3>
+        <p>{eventDescription}</p>
+      </div>
     </a>
   );
 }

@@ -1,5 +1,5 @@
 
-.rn-add {
+.ue-add {
   display: flex;
   justify-content: space-between;
   margin-top: 1em;
@@ -7,13 +7,13 @@
   width: 100%;
 }
 
-.rn-add > h1 {
+.ue-add > h1 {
   margin: 0 0 0.2em;
 }
 
 
 
-.rn-events-list {
+.ue-events-list {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;

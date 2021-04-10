@@ -15,6 +15,8 @@ export default function EventCard({
   user,
   title,
   web3,
+  setSelectedEvent,
+  type,
 }) {
   //STATIC ACTIONS
   if (open) {
@@ -69,6 +71,9 @@ export default function EventCard({
     if (user !== players[0].toLowerCase()) {
       match = false;
     }
+    if (type === "news" || type === "userEv") {
+      setSelectedEvent({ title, hash });
+    }
     endEvent(hash, match);
   };
 
@@ -90,6 +95,8 @@ export default function EventCard({
       </Badge>
       <h6>Event Hash</h6>
       <label>{`${hash}`}</label>
+      <h6>Event Manager</h6>
+      <label>{type === "news" ? "App Administrator" : `${players[0]}`}</label>
       <div className="rn-event">
         <div className="rn-event-left">
           <label className="rn-balance">{`${pool} ETH`}</label>

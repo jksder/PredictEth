@@ -1,5 +1,5 @@
 
-.rn-add {
+.news-add {
   display: flex;
   justify-content: space-between;
   margin-top: 1em;
@@ -7,13 +7,12 @@
   width: 100%;
 }
 
-.rn-add > h1 {
+.news-add > h1 {
   margin: 0 0 0.2em;
 }
 
 
-
-.rn-events-list {
+.news-events-list {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 
 //import styling
-import "./RandomNumber.css";
-import Alert from "react-bootstrap/Alert";
+import "./News.css";
+import { Alert, Modal, Button, InputGroup, FormControl } from "react-bootstrap";
 
 //import components
 import EventCard from "../../components/EventCard/EventCard";
 
 //import contract information
-import { address, ABI } from "../../ethereum/rn_contract/contract";
+import { address, ABI } from "../../ethereum/news_contract/contract";
 
 //import web3 modules
 import Web3 from "web3";
@@ -18,6 +18,11 @@ import detectEthereumProvider from "@metamask/detect-provider";
 import sha256 from "sha256";
 
 export default function RandomNumber() {
+  //winner selection window
+  const [selectMode, setSelectMode] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState("");
+  const [winner, setWinner] = useState(null);
+
   //ethereum info
   const [web3, setWeb3] = useState(null);
   const [contract, setContract] = useState(null);
@@ -90,7 +95,6 @@ export default function RandomNumber() {
     try {
       var txn = await contract.methods.addEvent(evHash, title).send({
         from: accounts[0],
-        value: web3.utils.toWei("0.02"),
       });
 
       console.log(txn);
@@ -122,17 +126,20 @@ export default function RandomNumber() {
     }
   };
 
-  const endEvent = async (evhash, match) => {
+  const endEvent = () => {
     setStatus("pending");
 
-    try {
-      const errMsg = "not the manager";
-      if (!match) throw errMsg;
+    setSelectMode(true);
+  };
 
-      var random = Math.floor(Math.random() * 2);
-      var txn = await contract.methods.endEvent(evhash, random).send({
-        from: accounts[0],
-      });
+  const selectWinner = async () => {
+    setSelectMode(false);
+    try {
+      var txn = await contract.methods
+        .endEvent(selectedEvent.hash, winner)
+        .send({
+          from: accounts[0],
+        });
       console.log(txn);
       setStatus("success");
       startup();
@@ -144,6 +151,7 @@ export default function RandomNumber() {
 
   //rendered components
   let rendered_events;
+
   if (events) {
     rendered_events = events.map((item, index) => {
       return (
@@ -156,64 +164,106 @@ export default function RandomNumber() {
           enterEvent={enterEvent}
           endEvent={endEvent}
           open={item.open}
-          winner={item.players[item.winner]} //the winner is recorded by the index
+          winner={item.winner} //the winner is recorded by the index
           user={accounts[0]}
           web3={web3}
+          setSelectedEvent={setSelectedEvent}
+          type="news"
         />
       );
     });
+
   }
 
-  return (
-    <div className="page-cont">
-      <Alert variant="primary" style={{ marginTop: "1em" }}>
-        <Alert.Heading>
-          {" "}
-          Avoid entering any personal or identifying data.
-        </Alert.Heading>
-        <p>
-          Please be aware that this application permanently posts data to a
-          public blockchain without any means of deleting such data once it has
-          been mined. As such it is best to avoid entering any sort of sensitive
-          information.
-        </p>
-      </Alert>
-      <div className="rn-add">
-        <h1>Random Number Bets</h1>
-        <div className="bet-form">
-          <input
-            type="text"
-            placeholder="Insert Event Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <button onClick={addEvent}>Add Event</button>
-        </div>
-      </div>
-      <div className="rn-events">
-        <Alert
-          variant={
-            status === "pending"
-              ? "warning"
-              : status === "success"
-              ? "success"
-              : status === "failure"
-              ? "danger"
-              : null
-          }
-        >
-          {status === "pending"
-            ? "Transaction being mined..."
-            : status === "success"
-            ? "Transaction mined!"
-            : status === "failure"
-            ? "Transaction failed!"
-            : null}
+  if (!selectMode) {
+    return (
+      <div className="page-cont">
+        <Alert variant="primary" style={{ marginTop: "1em" }}>
+          <Alert.Heading>
+            Avoid entering any personal or identifying data.
+          </Alert.Heading>
+          <p>
+            Please be aware that this application permanently posts data to a
+            public blockchain without any means of deleting such data once it
+            has been mined. As such it is best to avoid entering any sort of
+            sensitive information.
+          </p>
         </Alert>
-        <div className="rn-events-list">
-          {rendered_events ? rendered_events.reverse() : null}
+        <div className="news-add">
+          <h1>News Bets</h1>
+          <div className="bet-form">
+            <input
+              type="text"
+              placeholder="Insert Event Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <button onClick={addEvent}>Add Event</button>
+          </div>
+        </div>
+        <div className="news-events">
+          <Alert
+            variant={
+              status === "pending"
+                ? "warning"
+                : status === "success"
+                ? "success"
+                : status === "failure"
+                ? "danger"
+                : null
+            }
+          >
+            {status === "pending"
+              ? "Transaction being mined..."
+              : status === "success"
+              ? "Transaction mined!"
+              : status === "failure"
+              ? "Transaction failed!"
+              : null}
+          </Alert>
+          <div className="news-events-list">
+            {rendered_events ? rendered_events.reverse() : null}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <Modal
+        style={{ marginTop: "20em" }}
+        show={selectMode}
+        onHide={() => {
+          setStatus(null);
+          setSelectMode(false);
+        }}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Enter Winner Address</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <label>Event Title: {selectedEvent.title}</label>
+          </div>
+          <InputGroup className="mb-3">
+            <FormControl
+              placeholder="Address"
+              aria-label="Username"
+              aria-describedby="basic-addon1"
+              value={winner}
+              onChange={(e) => setWinner(e.target.value)}
+            />
+          </InputGroup>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="primary"
+            style={{ width: "100%" }}
+            onClick={selectWinner}
+          >
+            Pick Winner
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
 }
