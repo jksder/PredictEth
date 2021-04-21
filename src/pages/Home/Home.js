@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 //import styling
 import "./Home.css";
-import { Modal, Alert } from "react-bootstrap";
+import { Modal, Alert, Button } from "react-bootstrap";
 
 //import components
 import EventTypeCard from "../../components/EventTypeCard/EventTypeCard";
@@ -48,6 +48,8 @@ export default function Home() {
     );
   });
 
+  console.log(network);
+
   if (network === "rinkeby") {
     return (
       <div className="home-page">
@@ -64,7 +66,7 @@ export default function Home() {
     );
   } else if (network) {
     return (
-      <Modal>
+      <Modal show={true}>
         <Alert variant="warning" style={{ margin: "1em" }}>
           <Alert.Heading>Please Switch to Rinkeby</Alert.Heading>
           <p>
@@ -77,9 +79,16 @@ export default function Home() {
             <a href="https://support.airswap.io/en/articles/2831385-what-is-rinkeby">
               Learn more about Rinkeby
             </a>
+            <Button
+              style={{ display: "block", marginTop: "1em", width: "100%" }}
+              onClick={() => {
+                window.location.reload();
+              }}
+            >
+              Reload Page
+            </Button>
           </p>
         </Alert>
-
         <figure>
           <img alt="welcome" src="./event_types/network.png" />
         </figure>
@@ -87,7 +96,7 @@ export default function Home() {
     );
   } else {
     return (
-      <Modal>
+      <Modal show={true}>
         <Alert variant="warning" style={{ margin: "1em" }}>
           <Alert.Heading>No Blockchain Provider Detected</Alert.Heading>
           <p>
@@ -99,9 +108,16 @@ export default function Home() {
             <a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn">
               Metamask Chrome Web Store Location
             </a>
+            <Button
+              style={{ display: "block", marginTop: "1em", width: "100%" }}
+              onClick={() => {
+                window.location.reload();
+              }}
+            >
+              Reload Page
+            </Button>
           </p>
         </Alert>
-
         <figure>
           <img alt="broken" src="./event_types/broken.png" />
         </figure>
